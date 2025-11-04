@@ -1,3 +1,6 @@
+// =====================
+// What If Questions
+// =====================
 let questions = [
   "What if the universe is the eye of Bill Cipher?",
   "What if the pyramids were built by aliens?",
@@ -31,6 +34,9 @@ let questions = [
   "What if reality is a shared dream?"
 ];
 
+// =====================
+// Color Gradients
+// =====================
 const colors = [
   ["#0f0c29","#302b63","#24243e"],["#20002c","#cbb4d4","#6a3093"],
   ["#0f2027","#2c5364","#203a43"],["#42275a","#734b6d","#6a0572"],
@@ -38,13 +44,20 @@ const colors = [
   ["#000046","#1CB5E0","#0f0c29"],["#6a3093","#a044ff","#8360c3"]
 ];
 
+// =====================
+// State Variables
+// =====================
 let currentIndex = -1;
 let clickCount = 0;
 let typingSpeed = 25;
 let soundMuted = false;
+let typingInterval;
 let audio = new Audio("mystery.mp3");
 audio.volume = 0.3;
 
+// =====================
+// Navigation Functions
+// =====================
 function nextQuestion(){
   clickCount++;
   if(currentIndex < questions.length - 1){
@@ -63,26 +76,35 @@ function previousQuestion(){
   }
 }
 
+// =====================
+// Display Typed Question
+// =====================
 function displayTypedQuestion(text){
   const questionEl = document.getElementById("question");
   const randomC = Math.floor(Math.random() * colors.length);
   const gradient = colors[randomC];
   document.body.style.background = `linear-gradient(120deg, ${gradient.join(',')})`;
 
+  // Stop any previous typing to avoid letter mix-ups
+  if(typingInterval) clearInterval(typingInterval);
+
   questionEl.textContent = "";
   let i = 0;
-  const interval = setInterval(() => {
+  typingInterval = setInterval(() => {
     if(i < text.length){
       questionEl.textContent += text.charAt(i);
       i++;
     } else {
-      clearInterval(interval);
+      clearInterval(typingInterval);
     }
   }, typingSpeed);
 
   playSound();
 }
 
+// =====================
+// Add User Questions
+// =====================
 function addQuestion(){
   const input = document.getElementById("newQuestion");
   const text = input.value.trim();
@@ -93,6 +115,9 @@ function addQuestion(){
   }
 }
 
+// =====================
+// Sound Functions
+// =====================
 function playSound(){
   if(!soundMuted){
     audio.currentTime = 0;
