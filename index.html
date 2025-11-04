@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What If Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🤔 What If...</h1>
+    <p id="question">Click Next to see the first What If…</p>
+
+    <div class="buttons">
+      <button onclick="previousQuestion()">⬅ Back</button>
+      <button onclick="nextQuestion()">Next ➡</button>
+    </div>
+
+    <!-- User input after 30 questions -->
+    <div id="user-add" style="display:none; margin-top:20px;">
+      <input type="text" id="newQuestion" placeholder="Add your own What If..." />
+      <button onclick="addQuestion()">Add Question</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

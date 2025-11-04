@@ -1,0 +1,65 @@
+body {
+  background: linear-gradient(120deg, #0b001a, #1a0033);
+  background-size: 400% 400%;
+  animation: shift 20s ease infinite;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+  transition: background 1s ease-in-out;
+}
+
+@keyframes shift {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  width: 90%;
+  max-width: 500px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+p#question {
+  font-size: 1.3em;
+  min-height: 60px;
+  transition: opacity 0.6s ease;
+}
+
+.buttons button {
+  margin: 10px;
+  background: #00C9A7;
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.buttons button:hover {
+  background: #00B090;
+  transform: scale(1.05);
+}
+
+input#newQuestion {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 70%;
+  margin-right: 10px;
+}
