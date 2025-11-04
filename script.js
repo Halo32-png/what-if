@@ -1,4 +1,3 @@
-// 30 preloaded What If questions
 let questions = [
   "What if the universe is the eye of Bill Cipher?",
   "What if the pyramids were built by aliens?",
@@ -32,61 +31,58 @@ let questions = [
   "What if reality is a shared dream?"
 ];
 
-// 30+ Galaxy-inspired gradient colors
 const colors = [
-  ["#0f0c29","#302b63","#24243e"],
-  ["#20002c","#cbb4d4","#6a3093"],
-  ["#0f2027","#2c5364","#203a43"],
-  ["#42275a","#734b6d","#6a0572"],
-  ["#8360c3","#2ebf91","#7b2ff7"],
-  ["#141E30","#243B55","#3a6186"],
-  ["#000046","#1CB5E0","#0f0c29"],
-  ["#6a3093","#a044ff","#8360c3"],
-  ["#0f2027","#203a43","#2c5364"],
-  ["#1f1c2c","#928dab","#00d4ff"]
+  ["#0f0c29","#302b63","#24243e"],["#20002c","#cbb4d4","#6a3093"],
+  ["#0f2027","#2c5364","#203a43"],["#42275a","#734b6d","#6a0572"],
+  ["#8360c3","#2ebf91","#7b2ff7"],["#141E30","#243B55","#3a6186"],
+  ["#000046","#1CB5E0","#0f0c29"],["#6a3093","#a044ff","#8360c3"]
 ];
 
-let currentIndex = -1; // track current question
+let currentIndex = -1;
 let clickCount = 0;
+let typingSpeed = 25;
+let soundMuted = false;
+let audio = new Audio("mystery.mp3");
+audio.volume = 0.3;
 
-// Show next question
 function nextQuestion(){
   clickCount++;
   if(currentIndex < questions.length - 1){
     currentIndex++;
-    displayQuestion(currentIndex);
+    displayTypedQuestion(questions[currentIndex]);
   }
-  
   if(clickCount >= 30){
     document.getElementById("user-add").style.display = "block";
   }
 }
 
-// Show previous question
 function previousQuestion(){
   if(currentIndex > 0){
     currentIndex--;
-    displayQuestion(currentIndex);
+    displayTypedQuestion(questions[currentIndex]);
   }
 }
 
-// Display question with background
-function displayQuestion(index){
+function displayTypedQuestion(text){
   const questionEl = document.getElementById("question");
   const randomC = Math.floor(Math.random() * colors.length);
   const gradient = colors[randomC];
+  document.body.style.background = `linear-gradient(120deg, ${gradient.join(',')})`;
 
-  questionEl.style.opacity = 0;
+  questionEl.textContent = "";
+  let i = 0;
+  const interval = setInterval(() => {
+    if(i < text.length){
+      questionEl.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, typingSpeed);
 
-  setTimeout(() => {
-    questionEl.textContent = questions[index];
-    document.body.style.background = `linear-gradient(120deg, ${gradient.join(',')})`;
-    questionEl.style.opacity = 1;
-    playSound();
-  }, 400);
+  playSound();
 }
 
-// Add user question
 function addQuestion(){
   const input = document.getElementById("newQuestion");
   const text = input.value.trim();
@@ -97,9 +93,54 @@ function addQuestion(){
   }
 }
 
-// Play mysterious sound
 function playSound(){
-  const sound = new Audio("mystery.mp3");
-  sound.volume = 0.3;
-  sound.play();
+  if(!soundMuted){
+    audio.currentTime = 0;
+    audio.play();
+  }
 }
+
+function toggleMute(){
+  soundMuted = !soundMuted;
+  document.getElementById("muteBtn").textContent = soundMuted ? "🔇" : "🔊";
+}
+
+// =====================
+// Star Particle Background
+// =====================
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let w = canvas.width = window.innerWidth;
+let h = canvas.height = window.innerHeight;
+let stars = [];
+
+for(let i=0; i<150; i++){
+  stars.push({
+    x: Math.random()*w,
+    y: Math.random()*h,
+    r: Math.random()*1.5+0.5,
+    d: Math.random()*0.5+0.5
+  });
+}
+
+function animateStars(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = "#fff";
+  ctx.shadowBlur = 5;
+  ctx.shadowColor = "#fff";
+  stars.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2,false);
+    ctx.fill();
+
+    s.y += s.d;
+    if(s.y > h){ s.y = 0; s.x = Math.random()*w; }
+  });
+  requestAnimationFrame(animateStars);
+}
+
+animateStars();
+window.addEventListener('resize', () => {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+});

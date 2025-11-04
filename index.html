@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <canvas id="stars"></canvas>
+
   <div class="container">
     <h1>🤔 What If...</h1>
     <p id="question">Click Next to see the first What If…</p>
@@ -14,14 +16,17 @@
     <div class="buttons">
       <button onclick="previousQuestion()">⬅ Back</button>
       <button onclick="nextQuestion()">Next ➡</button>
+      <button id="muteBtn" onclick="toggleMute()">🔊</button>
     </div>
 
-    <!-- User input after 30 questions -->
     <div id="user-add" style="display:none; margin-top:20px;">
       <input type="text" id="newQuestion" placeholder="Add your own What If..." />
       <button onclick="addQuestion()">Add Question</button>
     </div>
   </div>
+
+  <footer>© 2025 WillDead</footer>
+
   <script src="script.js"></script>
 </body>
 </html>
